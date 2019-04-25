@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+}
+tr:hover td {
+  background:#fafafa
+}
+
+tr td {
+  background:#fff;
+}
+
+.row-author {
+  color: #333;
+  font-size: 13pt;
+}
+.row-author {
+  color: #999;
+}
