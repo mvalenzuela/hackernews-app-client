@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ArticleService } from './_services/article.service'
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MatTableModule } from '@angular/material/table';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule
   ],
   providers: [
     ArticleService

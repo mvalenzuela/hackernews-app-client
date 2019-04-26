@@ -16,3 +16,7 @@ tr td {
 .row-author {
   color: #999;
 }
+
+.title {
+  padding-left: 5em;
+}

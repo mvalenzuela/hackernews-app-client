@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ArticleService} from './_services/article.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ArticleService } from './_services/article.service';
 import { Article } from './_models/article';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule, MatTable } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,10 @@ export class AppComponent implements OnInit{
 
   todayDate: Date;
   articles: Article[];
-  title = 'hacker-news';
+  title = 'We <3 hacker news!';
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dic'];
   displayedColumns: string[] = ['title', 'date', 'delete'];
+  @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(private articleService: ArticleService) {}
 
@@ -79,10 +81,20 @@ export class AppComponent implements OnInit{
     }
     else if (differenceBetweenDates == 0 && differenceBetweenMoths == 0){
       if (date.getHours() / 12 < 1){
-        formattedDate = String(date.getHours()) + ":" + String(date.getMinutes()) + " am"
+        if (date.getMinutes() < 10){
+          formattedDate = String(date.getHours()) + ":" + String(date.getMinutes()) + "0 am";
+        }
+        else {
+          formattedDate = String(date.getHours()) + ":" + String(date.getMinutes()) + " am";
+        }
       }
       else {
-        formattedDate = String(date.getHours() % 12) + ":" + String(date.getMinutes()) + " pm"
+        if (date.getMinutes() < 10){
+          formattedDate = String(date.getHours() % 12) + ":" + String(date.getMinutes()) + "0 pm";
+        }
+        else{
+          formattedDate = String(date.getHours() % 12) + ":" + String(date.getMinutes()) + " pm";
+        }
       }
     }
     else {
@@ -90,7 +102,20 @@ export class AppComponent implements OnInit{
     }
     return formattedDate;
   }
+
   openUrl(element){
     window.open(element.url, '_blank');
+  }
+
+  deleteArticle(element){
+    console.log(this.articles);
+    const index = this.articles.indexOf(element, 0);
+    if (index > -1) {
+      this.articles.splice(index, 1);
+    }
+    console.log(this.articles)
+    this.table.renderRows();
+    this.articleService.deleteOne(element.id).subscribe((res) => {
+    });
   }
 }
